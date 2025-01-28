@@ -1,5 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CP Contacts</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .landing-page {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .btn-custom {
+      width: 80%;
+      max-width: 300px;
+      margin: 10px 0;
+    }
+    .contact-card {
+      border-left: 5px solid #0d6efd;
+    }
+    .details-section {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Landing Page -->
+<div id="landingPage" class="landing-page">
+  <h1 class="mb-4">CP Contacts</h1>
+  <button id="govContactsBtn" class="btn btn-primary btn-lg btn-custom">Government Contacts</button>
+  <button id="partyContactsBtn" class="btn btn-secondary btn-lg btn-custom">Party Contacts</button>
+</div>
+
+<!-- Government Contacts Page -->
+<div id="govContactsPage" class="container d-none">
+  <h2 class="text-center mt-4">Government Contacts</h2>
+  <button id="backToLandingGov" class="btn btn-outline-primary mb-3">Back</button>
+  <div id="govContactsList" class="mt-4">
+    <!-- Government contact cards will be dynamically added here -->
+  </div>
+</div>
+
+<!-- Panchayat Contact Details Page -->
+<div id="panchayatDetailsPage" class="container d-none">
+  <h2 class="text-center mt-4">Panchayat Details</h2>
+  <button id="backToGovContacts" class="btn btn-outline-primary mb-3">Back</button>
+  <div id="panchayatDetailsList"></div>
+</div>
+
+<!-- Party Contacts Page -->
+<div id="partyContactsPage" class="container d-none">
+  <h2 class="text-center mt-4">Party Contacts</h2>
+  <button id="backToLandingParty" class="btn btn-outline-primary mb-3">Back</button>
+  <div>
+    <button id="mandalBtn" class="btn btn-primary btn-custom">Mandal</button>
+    <button id="boothBtn" class="btn btn-secondary btn-custom">Booth</button>
+  </div>
+  <div id="mandalSection" class="d-none">
+    <label for="mandalSpinner" class="form-label mt-4">Select Mandal Type:</label>
+    <select id="mandalSpinner" class="form-select">
+      <option value="" selected disabled>Choose...</option>
+      <option value="mandalCommittee">Mandal Committee</option>
+      <option value="yuvaMorcha">Mandal Yuva Morcha</option>
+      <option value="mahilaMorcha">Mandal Mahila Morcha</option>
+      <option value="kishanMorcha">Mandal Kishan Morcha</option>
+      <option value="obcMorcha">Mandal OBC Morcha</option>
+      <option value="minorityMorcha">Mandal Minority Morcha</option>
+      <option value="scMorcha">Mandal SC Morcha</option>
+      <option value="stMorcha">Mandal ST Morcha</option>
+    </select>
+  </div>
+
+  <div id="boothSection" class="d-none">
+      <label for="boothSpinner" class="form-label mt-4">Select Booth:</label>
+      <select id="boothSpinner" class="form-select">
+        <option value="" selected disabled>Choose...</option>
+        <option value="booth1">Booth 1</option>
+        <option value="booth2">Booth 2</option>
+        <option value="booth3">Booth 3</option>
+      </select>
+    </div>
+
+  <div id="mandalContactsSection" class="d-none">
+    <h3 class="mt-4" id="mandalTypeTitle"></h3>
+    <div id="mandalContactsList"></div>
+  </div>
+
+
+  <div id="boothContactsSection" class="d-none">
+    <h3 class="mt-4" id="boothTypeTitle"></h3>
+    <div id="boothContactsList"></div>
+  </div>
+
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const landingPage = document.getElementById('landingPage');
+  const govContactsPage = document.getElementById('govContactsPage');
+  const panchayatDetailsPage = document.getElementById('panchayatDetailsPage');
+  const partyContactsPage = document.getElementById('partyContactsPage');
+  const govContactsBtn = document.getElementById('govContactsBtn');
+  const partyContactsBtn = document.getElementById('partyContactsBtn');
+  const backToLandingGov = document.getElementById('backToLandingGov');
+  const backToGovContacts = document.getElementById('backToGovContacts');
+  const backToLandingParty = document.getElementById('backToLandingParty');
+  const mandalBtn = document.getElementById('mandalBtn');
+  const boothBtn = document.getElementById('boothBtn');
+  const mandalSpinner = document.getElementById('mandalSpinner');
+  const boothSpinner = document.getElementById('boothSpinner');
+  const mandalContactsSection = document.getElementById('mandalContactsSection');
+  const mandalContactsList = document.getElementById('mandalContactsList');
+  const mandalTypeTitle = document.getElementById('mandalTypeTitle');
+
+
+  const boothContactsSection = document.getElementById('boothContactsSection');
+  const boothContactsList = document.getElementById('boothContactsList');
+  const boothTypeTitle = document.getElementById('boothTypeTitle');
+
+
+
+  const panchayatDetailsList = document.getElementById('panchayatDetailsList');
+
+  const mandalSection = document.getElementById('mandalSection');
+  const boothSection = document.getElementById('boothSection');
+
+  // Example data
+  const govContacts = [
+    { name: 'Sukumar Das', designation: 'District Collector', mobile: '9366050546' },
+    { name: 'Bikash Saha', designation: 'SP', mobile: '9366050546' },
+    { name: 'Rupak Sen', designation: 'Pradhan', mobile: '9366050546', type: 'panchayat', details: [
+      { name: 'Seema Sarkar', designation: 'Ward Member', ward: 1, mobile: '9366050546' },
+      { name: 'Ruma Shil', designation: 'Ward Member', ward: 2, mobile: '9366050546' }
+    ]}
+  ];
+
+  const mandalContacts = {
+    mandalCommittee: [
+      { name: 'Rajesh Paul', designation: 'President', mobile: '9366050546' },
+      { name: 'Chandan Biswas', designation: 'Vice President', mobile: '9366050546' }
+    ],
+    yuvaMorcha: [
+      { name: 'Krishna Das', designation: 'President', mobile: '9366050546' }
+    ]
+    // Add other categories similarly
+  };
+
+  const boothContacts = {
+    booth1: [
+      { name: 'Rajesh Paul', designation: 'President', mobile: '9366050546' },
+      { name: 'Chandan Biswas', designation: 'Vice President', mobile: '9366050546' }
+    ],
+    booth2: [
+      { name: 'Krishna Das', designation: 'President', mobile: '9366050546' }
+    ]
+    // Add other categories similarly
+  };
+
+  govContactsBtn.addEventListener('click', () => {
+    landingPage.classList.add('d-none');
+    govContactsPage.classList.remove('d-none');
+    const govContactsList = document.getElementById('govContactsList');
+    govContactsList.innerHTML = govContacts.map(contact => `
+      <div class="card mb-3 contact-card">
+        <div class="card-body">
+          <h5 class="card-title">${contact.name}</h5>
+          <p class="card-text">${contact.designation}</p>
+          ${contact.type === 'panchayat' ? `<button class="btn btn-primary details-btn" data-details='${JSON.stringify(contact.details)}'>Details</button>` 
+          : `<a href="tel:${contact.mobile}" class="btn btn-primary">Call: ${contact.mobile}</a>`}
+        </div>
+      </div>
+    `).join('');
+    attachDetailsEventListeners();
+  });
+
+  function attachDetailsEventListeners() {
+    document.querySelectorAll('.details-btn').forEach(button => {
+      button.addEventListener('click', event => {
+        const details = JSON.parse(event.target.dataset.details);
+        govContactsPage.classList.add('d-none');
+        panchayatDetailsPage.classList.remove('d-none');
+        panchayatDetailsList.innerHTML = details.map(contact => `
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">${contact.name}</h5>
+              <p class="card-text">Designation: ${contact.designation}</p>
+              <p class="card-text">Ward: ${contact.ward}</p>
+              <a href="tel:${contact.mobile}" class="btn btn-primary">Call: ${contact.mobile}</a>
+            </div>
+          </div>
+        `).join('');
+      });
+    });
+  }
+
+  backToGovContacts.addEventListener('click', () => {
+    panchayatDetailsPage.classList.add('d-none');
+    govContactsPage.classList.remove('d-none');
+  });
+
+  backToLandingGov.addEventListener('click', () => {
+    govContactsPage.classList.add('d-none');
+    landingPage.classList.remove('d-none');
+  });
+
+  partyContactsBtn.addEventListener('click', () => {
+    landingPage.classList.add('d-none');
+    partyContactsPage.classList.remove('d-none');
+  });
+
+  backToLandingParty.addEventListener('click', () => {
+    partyContactsPage.classList.add('d-none');
+    landingPage.classList.remove('d-none');
+  });
+
+  mandalBtn.addEventListener('click', () => {
+    //document.getElementById('mandalSection').classList.remove('d-none');
+    boothContactsSection.classList.add('d-none');
+    mandalContactsSection.classList.add('d-none');
+    boothSection.classList.add('d-none');
+    mandalSection.classList.remove('d-none');
+    
+  });
+
+  boothBtn.addEventListener('click', () => {
+    //document.getElementById('boothSection').classList.remove('d-none');
+    boothContactsSection.classList.add('d-none');
+    mandalContactsSection.classList.add('d-none');
+    boothSection.classList.remove('d-none');
+    mandalSection.classList.add('d-none');
+  });
+
+  mandalSpinner.addEventListener('change', () => {
+    const selectedValue = mandalSpinner.value;
+    const contacts = mandalContacts[selectedValue] || [];
+    mandalTypeTitle.textContent = selectedValue.replace(/([A-Z])/g, ' $1').trim();
+    mandalContactsSection.classList.remove('d-none');
+    mandalContactsList.innerHTML = contacts.map(contact => `
+      <div class="card mb-3 contact-card">
+        <div class="card-body">
+          <h5 class="card-title">${contact.name}</h5>
+          <p class="card-text">${contact.designation}</p>
+          <a href="tel:${contact.mobile}" class="btn btn-primary">Call: ${contact.mobile}</a>
+        </div>
+      </div>
+    `).join('');
+  });
+
+
+  boothSpinner.addEventListener('change', () => {
+    const selectedValue = boothSpinner.value;
+    const contacts = boothContacts[selectedValue] || [];
+    boothTypeTitle.textContent = selectedValue.replace(/([A-Z])/g, ' $1').trim();
+    boothContactsSection.classList.remove('d-none');
+    boothContactsList.innerHTML = contacts.map(contact => `
+      <div class="card mb-3 contact-card">
+        <div class="card-body">
+          <h5 class="card-title">${contact.name}</h5>
+          <p class="card-text">${contact.designation}</p>
+          <a href="tel:${contact.mobile}" class="btn btn-primary">Call: ${contact.mobile}</a>
+        </div>
+      </div>
+    `).join('');
+  });
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -13,7 +301,7 @@
 </head>
 
 <body>
-    <!--nav-->
+   
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom text-bg-light">
             <a href="/"
@@ -114,7 +402,7 @@
         </div>
     </div>
 
-    <!-- scripts -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -126,4 +414,7 @@
         crossorigin="anonymous"></script>
 </body>
 
+    
+
 </html>
+-->
