@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,18 +37,28 @@
 <!-- Landing Page -->
 <div id="landingPage" class="landing-page">
   <h1 class="mb-4">CP Contacts</h1>
-  <button id="govContactsBtn" class="btn btn-primary btn-lg btn-custom">Government Contacts</button>
-  <button id="partyContactsBtn" class="btn btn-secondary btn-lg btn-custom">Party Contacts</button>
+  <button id="seniorOfficialsButton" class="btn btn-primary btn-lg btn-custom">Senior Officials</button>
+  <button id="prasashanButton" class="btn btn-success btn-lg btn-custom">Prasashan</button>
+  <button id="sangathanButton" class="btn btn-secondary btn-lg btn-custom">Sangathan</button>
 </div>
 
 <!-- Government Contacts Page -->
 <div id="govContactsPage" class="container d-none">
-  <h2 class="text-center mt-4">Government Contacts</h2>
+  <h2 class="text-center mt-4">Senior Officials</h2>
   <button id="backToLandingGov" class="btn btn-outline-primary mb-3">Back</button>
   <div id="govContactsList" class="mt-4">
     <!-- Government contact cards will be dynamically added here -->
   </div>
 </div>
+
+<!-- prashasanPage Page -->
+<div id="prashasanPage" class="container d-none">
+    <h2 class="text-center mt-4">Prashasan</h2>
+    <button id="backToLandingPrashasan" class="btn btn-outline-primary mb-3">Back</button>
+    <div id="prashasanContactsList" class="mt-4">
+      <!-- Government contact cards will be dynamically added here -->
+    </div>
+  </div>
 
 <!-- Panchayat Contact Details Page -->
 <div id="panchayatDetailsPage" class="container d-none">
@@ -109,11 +120,17 @@
   const govContactsPage = document.getElementById('govContactsPage');
   const panchayatDetailsPage = document.getElementById('panchayatDetailsPage');
   const partyContactsPage = document.getElementById('partyContactsPage');
-  const govContactsBtn = document.getElementById('govContactsBtn');
-  const partyContactsBtn = document.getElementById('partyContactsBtn');
+  const prashasanPage = document.getElementById('prashasanPage');
+
+  const seniorOfficialsButton = document.getElementById('seniorOfficialsButton');
+  const prasashanButton = document.getElementById('prasashanButton');
+  const sangathanButton = document.getElementById('sangathanButton');
+  
   const backToLandingGov = document.getElementById('backToLandingGov');
   const backToGovContacts = document.getElementById('backToGovContacts');
   const backToLandingParty = document.getElementById('backToLandingParty');
+  const backToLandingPrashasan = document.getElementById('backToLandingPrashasan')
+
   const mandalBtn = document.getElementById('mandalBtn');
   const boothBtn = document.getElementById('boothBtn');
   const mandalSpinner = document.getElementById('mandalSpinner');
@@ -122,12 +139,9 @@
   const mandalContactsList = document.getElementById('mandalContactsList');
   const mandalTypeTitle = document.getElementById('mandalTypeTitle');
 
-
   const boothContactsSection = document.getElementById('boothContactsSection');
   const boothContactsList = document.getElementById('boothContactsList');
   const boothTypeTitle = document.getElementById('boothTypeTitle');
-
-
 
   const panchayatDetailsList = document.getElementById('panchayatDetailsList');
 
@@ -135,12 +149,21 @@
   const boothSection = document.getElementById('boothSection');
 
   // Example data
-  const govContacts = [
+  const seniorOfficialsContacts = [
     { name: 'Sukumar Das', designation: 'District Collector', mobile: '9366050546' },
     { name: 'Bikash Saha', designation: 'SP', mobile: '9366050546' },
     { name: 'Rupak Sen', designation: 'Pradhan', mobile: '9366050546', type: 'panchayat', details: [
       { name: 'Seema Sarkar', designation: 'Ward Member', ward: 1, mobile: '9366050546' },
       { name: 'Ruma Shil', designation: 'Ward Member', ward: 2, mobile: '9366050546' }
+    ]}
+  ];
+
+  const prashasanPageContacts = [
+    { name: 'Kamal Das', designation: 'Pradhan - Phoolthali', mobile: '9366050546' },
+    { name: 'Bimal Saha', designation: 'Upa Pradhan - Phoolthali', mobile: '9366050546' },
+    { name: 'Romen Sen', designation: 'Member - Phoolthali', mobile: '9366050546', type: 'panchayat', details: [
+      { name: 'Nirmal Sarkar', designation: 'Ward Member', ward: 1, mobile: '9366050546' },
+      { name: 'Seema Shil', designation: 'Ward Member', ward: 2, mobile: '9366050546' }
     ]}
   ];
 
@@ -166,11 +189,30 @@
     // Add other categories similarly
   };
 
-  govContactsBtn.addEventListener('click', () => {
+  seniorOfficialsButton.addEventListener('click', () => {
     landingPage.classList.add('d-none');
     govContactsPage.classList.remove('d-none');
     const govContactsList = document.getElementById('govContactsList');
-    govContactsList.innerHTML = govContacts.map(contact => `
+    govContactsList.innerHTML = seniorOfficialsContacts.map(contact => `
+      <div class="card mb-3 contact-card">
+        <div class="card-body">
+          <h5 class="card-title">${contact.name}</h5>
+          <p class="card-text">${contact.designation}</p>
+          ${contact.type === 'panchayat' ? `<button class="btn btn-primary details-btn" data-details='${JSON.stringify(contact.details)}'>Details</button>` 
+          : `<a href="tel:${contact.mobile}" class="btn btn-primary">Call: ${contact.mobile}</a>`}
+        </div>
+      </div>
+    `).join('');
+    attachDetailsEventListeners();
+  });
+
+  prasashanButton.addEventListener('click', () => {
+    landingPage.classList.add('d-none');
+    govContactsPage.classList.add('d-none');
+    prashasanPage.classList.remove('d-none');
+
+    const govContactsList = document.getElementById('prashasanContactsList');
+    govContactsList.innerHTML = prashasanPageContacts.map(contact => `
       <div class="card mb-3 contact-card">
         <div class="card-body">
           <h5 class="card-title">${contact.name}</h5>
@@ -213,7 +255,12 @@
     landingPage.classList.remove('d-none');
   });
 
-  partyContactsBtn.addEventListener('click', () => {
+  backToLandingPrashasan.addEventListener('click', () => {
+    prashasanPage.classList.add('d-none');
+    landingPage.classList.remove('d-none');
+  });
+
+  sangathanButton.addEventListener('click', () => {
     landingPage.classList.add('d-none');
     partyContactsPage.classList.remove('d-none');
   });
@@ -276,145 +323,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-<!--
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-adsense-account" content="ca-pub-8587799019842987">
-    <title>Tech Prarambh :: Igniting Innovation, Powering Progress</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8587799019842987"
-        crossorigin="anonymous"></script>
-</head>
-
-<body>
-   
-    <div class="container">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom text-bg-light">
-            <a href="/"
-                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <img src="images/logo.png" class="bi me-2" width="40" height="40" />
-                <span class="fs-4">TECH PRARAMBH</span>
-            </a>
-
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
-                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="privacy.html" class="nav-link active">Privacy</a></li>
-            </ul>
-        </header>
-    </div>
-
-    <div class="container">
-        <img width="100%" height="540" src="images/privacy-policy.jpg" />
-        <small>Image by <a href="https://pixabay.com/users/viarami-13458823/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5243225">Markus Winkler</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5243225">Pixabay</a></small>
-    </div>
-
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="mt-4">Our Privacy Policy</h1>
-                <p>
-                    Welcome to our website techprarambh.in ("we," "our," or "us"). We are committed to protecting your
-                    privacy and ensuring the security of your personal information. This Privacy Policy outlines the
-                    types of information we may collect from you, how we use and safeguard your information, and your
-                    rights regarding the information you provide. By using our website, you consent to the terms outlined in this Privacy Policy. Please
-                    take the time to read and understand this document.</p>
-                <h5>Information We Collect</h5>
-                <h6>Personal Information</h6>
-                <p>We may collect personal information, including but not limited to:</p>
-                <ul>
-                    <li>Name</li>
-                    <li>Email address</li>
-                    <li>Phone number</li>
-                    <li>Mailing address</li>
-                </ul>
-                <h5>Non-Personal Information</h5>
-                <p>We may also collect non-personal information such as:</p>
-                <ul>
-                    <li>Browser type</li>
-                    <li>IP address</li>
-                    <li>Device information</li>
-                    <li>Usage patterns on our website</li>
-                </ul>
-                <h5>How We Use Your Information</h5>
-                <p>We use the information we collect for the following purposes:</p>
-                <ul>
-                    <li>To provide and improve our services</li>
-                    <li>To respond to your inquiries and requests</li>
-                    <li>To send periodic emails and newsletters</li>
-                    <li>To analyze website usage and trends</li>
-                </ul>
-                <h5>We Protect Your Information</h5>
-                <p>We take appropriate measures to safeguard your personal information against unauthorized access,
-                    disclosure, alteration,
-                    and destruction. These measures include data encryption, secure socket layer (SSL) technology, and
-                    regular security
-                    assessments.</p>
-
-                <h5>Cookies</h5>
-                <p>Our website may use cookies to enhance your experience. You can choose to disable cookies through
-                    your browser settings;
-                    however, this may affect your ability to access certain features of our website.</p>
-
-                <h5>Third-Party Links</h5>
-                <p>Our website may contain links to third-party websites. We are not responsible for the privacy
-                    practices or content of
-                    these websites. We encourage you to review the privacy policies of any third-party sites you visit.
-                </p>
-                <h5>Children's Privacy</h5>
-                <p>Our website is not directed at children under the age of 13. We do not knowingly collect personal
-                    information from
-                    children. If you believe that a child has provided us with their personal information, please
-                    contact us, and we will
-                    take appropriate steps to delete the information.</p>
-
-                <h5>Your Rights</h5>
-                <h6>You have the right to:</h6>
-                <p>Access and update your personal information
-                    Opt-out of receiving marketing communications
-                    Request the deletion of your personal information
-                    To exercise these rights, please contact us at techprarambh@gmail.com.</p>
-
-                <h5>Changes to this Privacy Policy</h5>
-                <p>We reserve the right to update or modify this Privacy Policy at any time. Any changes will be
-                    effective immediately upon
-                    posting on our website. Please check this page periodically for updates.</p>
-                <h5>Contact Us</h5>
-                <p>If you have any questions or concerns about our Privacy Policy, please contact us at
-                    techprarambh@gmail.com. Thank you for trusting www.techprarambh.in.</p>
-            </div>
-        </div>
-    </div>
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
-</body>
-
-    
-
-</html>
--->
