@@ -41,7 +41,7 @@
 
 <!-- Landing Page -->
 <div id="landingPage" class="landing-page">
-  <h1 class="mb-4">CP Contacts</h1>
+  <h1 class="mb-4">CP-52 Contacts</h1>
   <button id="seniorOfficialsButton" class="btn btn-primary btn-lg btn-custom">Senior Officials</button>
   <button id="prasashanButton" class="btn btn-success btn-lg btn-custom">Prasashan</button>
   <button id="sangathanButton" class="btn btn-secondary btn-lg btn-custom">Sangathan</button>
@@ -50,7 +50,7 @@
 <!-- Government Contacts Page -->
 <div id="govContactsPage" class="container d-none">
   <h2 class="text-center mt-4">Senior Officials</h2>
-  <button id="backToLandingGov" class="btn btn-outline-primary mb-3">Back</button>
+  <button id="backFromSeniorOfficials" class="btn btn-outline-primary mb-3">Back</button>
   <div id="govContactsList" class="mt-4">
     <!-- Government contact cards will be dynamically added here -->
   </div>
@@ -59,8 +59,16 @@
 <!-- prashasanPage Page -->
 <div id="prashasanPage" class="container d-none">
     <h2 class="text-center mt-4">Prashasan</h2>
-    <button id="backToLandingPrashasan" class="btn btn-outline-primary mb-3">Back</button>
+    <button id="backFromPrashasanPage" class="btn btn-outline-primary mb-3">Back</button>
     <div id="prashasanContactsList" class="container mt-4">
+      <!-- Government contact cards will be dynamically added here -->
+    </div>
+  </div>
+
+  <div id="sanghathanPage" class="container d-none">
+    <h2 class="text-center mt-4">Sanghathan</h2>
+    <button id="backFromSanghathanPage" class="btn btn-outline-primary mb-3">Back</button>
+    <div id="sanghathanContactsList" class="container mt-4">
       <!-- Government contact cards will be dynamically added here -->
     </div>
   </div>
@@ -73,6 +81,7 @@
 </div>
 
 <!-- Party Contacts Page -->
+ <!--
 <div id="partyContactsPage" class="container d-none">
   <h2 class="text-center mt-4">Party Contacts</h2>
   <button id="backToLandingParty" class="btn btn-outline-primary mb-3">Back</button>
@@ -117,41 +126,44 @@
   </div>
 
 </div>
+-->
 
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   const landingPage = document.getElementById('landingPage');
   const govContactsPage = document.getElementById('govContactsPage');
-  const panchayatDetailsPage = document.getElementById('panchayatDetailsPage');
-  const partyContactsPage = document.getElementById('partyContactsPage');
+  //const panchayatDetailsPage = document.getElementById('panchayatDetailsPage');
+  //const partyContactsPage = document.getElementById('partyContactsPage');
   const prashasanPage = document.getElementById('prashasanPage');
+  const sanghathanPage = document.getElementById('sanghathanPage');
 
   const seniorOfficialsButton = document.getElementById('seniorOfficialsButton');
   const prasashanButton = document.getElementById('prasashanButton');
   const sangathanButton = document.getElementById('sangathanButton');
   
-  const backToLandingGov = document.getElementById('backToLandingGov');
-  const backToGovContacts = document.getElementById('backToGovContacts');
-  const backToLandingParty = document.getElementById('backToLandingParty');
-  const backToLandingPrashasan = document.getElementById('backToLandingPrashasan')
+  const backFromSeniorOfficials = document.getElementById('backFromSeniorOfficials');
+  //const backToGovContacts = document.getElementById('backToGovContacts');
+  //const backToLandingParty = document.getElementById('backToLandingParty');
+  const backFromPrashasanPage = document.getElementById('backFromPrashasanPage')
+  const backFromSanghathanPage = document.getElementById('backFromSanghathanPage')
 
-  const mandalBtn = document.getElementById('mandalBtn');
-  const boothBtn = document.getElementById('boothBtn');
-  const mandalSpinner = document.getElementById('mandalSpinner');
-  const boothSpinner = document.getElementById('boothSpinner');
-  const mandalContactsSection = document.getElementById('mandalContactsSection');
-  const mandalContactsList = document.getElementById('mandalContactsList');
-  const mandalTypeTitle = document.getElementById('mandalTypeTitle');
+  //const mandalBtn = document.getElementById('mandalBtn');
+  //const boothBtn = document.getElementById('boothBtn');
+  //const mandalSpinner = document.getElementById('mandalSpinner');
+  //const boothSpinner = document.getElementById('boothSpinner');
+  //const mandalContactsSection = document.getElementById('mandalContactsSection');
+  //const mandalContactsList = document.getElementById('mandalContactsList');
+  //const mandalTypeTitle = document.getElementById('mandalTypeTitle');
 
-  const boothContactsSection = document.getElementById('boothContactsSection');
-  const boothContactsList = document.getElementById('boothContactsList');
-  const boothTypeTitle = document.getElementById('boothTypeTitle');
+  //const boothContactsSection = document.getElementById('boothContactsSection');
+  //const boothContactsList = document.getElementById('boothContactsList');
+  //const boothTypeTitle = document.getElementById('boothTypeTitle');
 
-  const panchayatDetailsList = document.getElementById('panchayatDetailsList');
+  //const panchayatDetailsList = document.getElementById('panchayatDetailsList');
 
-  const mandalSection = document.getElementById('mandalSection');
-  const boothSection = document.getElementById('boothSection');
+  //const mandalSection = document.getElementById('mandalSection');
+  //const boothSection = document.getElementById('boothSection');
 
   // Example data
   const seniorOfficialsContacts = [
@@ -352,12 +364,26 @@
   title:"Gournagar Panchayat Samiti", contacts:[
     {name:'Shyam Kuram Sinha',designation:'Member',mobile:'9862821816'},
     {name:'Jutsna Malakar',designation:'Member',mobile:'9862501893'},
-    {name:'Debabrata Dey',designation:'Member',mobile:'8732078064'}]}
+    {name:'Debabrata Dey',designation:'Member',mobile:'8732078064'}
+  ]},
+  {title:"Goldharpur GP", contacts:[
+    {name:'Swapna Sinha',designation:'Member',mobile:'7628819927'},
+    {name:'Bidyut Sinha',designation:'Member',mobile:'9862982082'}
+  ]},
+  {title:"Bhagaban Nagar GP", contacts:[
+    {name:'Dilip Debbarma',designation:'Member',mobile:'8787396109'},
+    {name:'Laxmikanta Debnath',designation:'Member',mobile:'9612589506'},
+    {name:'Prasenjit Malakar',designation:'Member',mobile:'6009422677'}
+]},
+{title:"Chandipur Panchayat Samiti",contacts:[
+  {name:'Sampa Das (Paul)',designation:'Chairperson',mobile:'7005950072'},
+  {name:'Binoy Sinha',designation:'Vice-Chairperson',mobile:'9862786533'}
+]}
   ];
 
   var sortedPrashasanPageContacts = prashasanPageContacts.sort((a, b) => a.title.localeCompare(b.title));
 
-  const mandalContacts = {
+  /*const mandalContacts = {
     mandalCommittee: [
       { name: 'Rajesh Paul', designation: 'President', mobile: '9366050546' },
       { name: 'Chandan Biswas', designation: 'Vice President', mobile: '9366050546' }
@@ -366,9 +392,9 @@
       { name: 'Krishna Das', designation: 'President', mobile: '9366050546' }
     ]
     // Add other categories similarly
-  };
+  };*/
 
-  const boothContacts = {
+  /*const boothContacts = {
     booth1: [
       { name: 'Rajesh Paul', designation: 'President', mobile: '9366050546' },
       { name: 'Chandan Biswas', designation: 'Vice President', mobile: '9366050546' }
@@ -377,7 +403,110 @@
       { name: 'Krishna Das', designation: 'President', mobile: '9366050546' }
     ]
     // Add other categories similarly
-  };
+  };*/
+
+  const orgPageContacts = [
+    {title:'Murticherra GP', contacts:[
+      {name:'Satyajit Kurmi',designation:'Booth President -1',mobile:'8974123904'}
+  ]},
+    {title:'Manuvelly GP', contacts:[
+      {name:'Niral Goala',designation:'Booth President -9',mobile:'8974062354'},
+      {name:'Sankar Ch Dey',designation:'Booth President -10',mobile:'9812831977'}
+  ]},
+    {title:'Samrurpar GP', contacts:[
+      {name:'Khokan Shukla Das',designation:'Booth President -3',mobile:'7085340514'},
+      {name:'Prabhat Nama',designation:'Booth President -4',mobile:'8413994962'},
+      {name:'Nilkesh Baidya',designation:'Booth President -5',mobile:'8974615224'}
+  ]},
+    {title:'Chandipur GP', contacts:[
+      {name:'Kripesh  Das',designation:'Booth President -6',mobile:'8731891969'},
+      {name:'Achinta Das',designation:'Booth President -7',mobile:'6909917959'},
+      {name:'Jhutan Das',designation:'Booth President -8',mobile:'9362336477'}
+    ]},
+    {title:'Srirampur GP', contacts:[
+    {name:'Sheli Das',designation:'Booth President -11',mobile:'9436530023'},
+    {name:'Abha Roy Saha',designation:'Booth President -12',mobile:'9233057722'},
+    {name:'Dipak Ranjan Das',designation:'Booth President -14',mobile:'8731890616'},
+    {name:'Jantu Das',designation:'Booth President -13',mobile:'9862439794'}
+  ]},
+    {title:'Halairpar GP', contacts:[
+      {name:'Uttam Ghosh(Liton)',designation:'Booth President -15',mobile:'9402362418'}
+  ]},
+    {title:'Rangrung GP', contacts:[
+      {name:'Ujjal Kurmi',designation:'Booth President -16',mobile:'7558640343'}
+  ]},
+    {title:'Jarultali GP', contacts:[
+      {name:'Krishna Roy',designation:'Booth President -22',mobile:'7005679565'},
+      {name:'Ataul Sinha',designation:'Booth President -23',mobile:'8974992959'}
+  ]},
+    {title:'Chantail GP', contacts:[
+      {name:'Dilip Dey',designation:'Booth President -19',mobile:'7629825735'},
+      {name:'Sumanta Shil',designation:'Booth President -20',mobile:'8974639482'},
+      {name:'Biplab Kanti Dey',designation:'Booth President -21',mobile:'8974365198'}
+    ]},
+    {title:'Fultail GP', contacts:[
+      {name:'Chanchal Singha',designation:'Booth President -26',mobile:'9366003557'},
+      {name:'Samarjit Ghosh',designation:'Booth President -28',mobile:'9612535259'}
+  ]},
+    {title:'Sarojini GP', contacts:[
+      {name:'Mithun Rabi Das',designation:'Booth President -18',mobile:'7085461024'}
+  ]},
+    {title:'Dhanbilash GP', contacts:[
+      {name:'Ruban Malakar',designation:'Booth President -32',mobile:'8974311422'},
+      {name:'Takhelei Sarma',designation:'Booth President -33',mobile:'9862352116'},
+      {name:'Nilkanta Sinha',designation:'Booth President -35',mobile:'8787723982'}
+  ]},
+    {title:'BC Nagar GP', contacts:[
+      {name:'Goutam Rudra Paul',designation:'Booth President -29',mobile:'9862440433'},
+      {name:'Birajit Sinha',designation:'Booth President -30',mobile:'8974134995'},
+      {name:'Radha Mohan Singha',designation:'Booth President -31',mobile:'6909051002'}
+  ]},
+    {title:'Gournagar GP', contacts:[
+      {name:'Bibash Dey',designation:'Booth President -36',mobile:'9612227629'},
+      {name:'Sanjit Malakar',designation:'Booth President -37',mobile:'9862662451'},
+      {name:'Tarasankar Singha',designation:'Booth President -40',mobile:'9862982070'},
+      {name:'Dakhina Debnath',designation:'Booth President -41',mobile:'9612260764'}
+  ]},
+    {title:'Kaulikura GP', contacts:[
+      {name:'Prasenjit Debnath',designation:'Booth President -46',mobile:'8794843223'},
+      {name:'Manindra Debnath',designation:'Booth President -47',mobile:'9862980439'},
+      {name:'Gunadhar Sharma',designation:'Booth President -48',mobile:'8415005988'}
+  ]},
+    {title:'Jalai GP', contacts:[
+      {name:'Subir Das',designation:'Booth President -49',mobile:'9862442079'},
+      {name:'Krishnadhan Sinha',designation:'Booth President -50',mobile:'9612246471'},
+      {name:'Raju Bhowmik',designation:'Booth President -51',mobile:'9362889429'},
+      {name:'Paritosh Das',designation:'Booth President -52',mobile:'7629019222'}
+  ]},
+  {title:"Goldharpur GP", contacts:[
+    {name:'Rana Deb',designation:'Booth President -38',mobile:'9862442893'},
+    {name:'Bidyut Dey',designation:'Booth President -39',mobile:'9862982082'}
+  ]},
+  {title:"Bhagaban Nagar GP", contacts:[
+    {name:'Bijit Debnath',designation:'Booth President -42',mobile:'9485015682'},
+    {name:'Rajendra Kr Debnath',designation:'Booth President -43',mobile:'9086771556'}
+]},
+{title:"Jamtailbari VC", contacts:[
+    {name:'Chiranjit Debbarma',designation:'Booth President -2',mobile:'8119856312'},
+    {name:'Paitunlun Halam',designation:'Booth President -17',mobile:'9862442064'}
+]},
+{title:"Millong VC", contacts:[
+  {name:'Apu Debbarma',designation:'Booth President -34',mobile:'6009965938'}
+]},
+{title:"Golakpur VC",contacts:[
+  {name:'Prem Singh Urang',designation:'Booth President -24',mobile:'6909229678'},
+  {name:'Chanmangal Debbarma',designation:'Booth President -25',mobile:'9436547381'}
+]},
+{title:"Singirbil VC",contacts:[{name:'Narendra Debbarma',designation:'Booth President -27',mobile:'9233761635'}
+]},
+{title:"Deoracherra VC",contacts:[{name:'Hiren Debbarma',designation:'Booth President -44',mobile:'6009371141'}
+]},
+{title:"Unakoti VC",contacts:[{name:'Ganga Debbarma',designation:'Booth President -45',mobile:'8974641062'},
+{name:'Neichanga Darlong',designation:'Booth President -53',mobile:'6033012157'}
+]}
+  ];
+
+  var sortedOrgPageContacts = orgPageContacts.sort((a, b) => a.title.localeCompare(b.title));
 
   seniorOfficialsButton.addEventListener('click', () => {
     landingPage.classList.add('d-none');
@@ -442,7 +571,7 @@
     attachDetailsEventListeners();
   });*/
 
-  function attachDetailsEventListeners() {
+  /*function attachDetailsEventListeners() {
     document.querySelectorAll('.details-btn').forEach(button => {
       button.addEventListener('click', event => {
         const details = JSON.parse(event.target.dataset.details);
@@ -460,51 +589,81 @@
         `).join('');
       });
     });
-  }
+  }*/
 
-  backToGovContacts.addEventListener('click', () => {
-    panchayatDetailsPage.classList.add('d-none');
-    govContactsPage.classList.remove('d-none');
-  });
+  //backToGovContacts.addEventListener('click', () => {
+    //panchayatDetailsPage.classList.add('d-none');
+    //govContactsPage.classList.remove('d-none');
+  //});
 
-  backToLandingGov.addEventListener('click', () => {
+  backFromSeniorOfficials.addEventListener('click', () => {
     govContactsPage.classList.add('d-none');
     landingPage.classList.remove('d-none');
   });
 
-  backToLandingPrashasan.addEventListener('click', () => {
+  backFromPrashasanPage.addEventListener('click', () => {
     prashasanPage.classList.add('d-none');
+    landingPage.classList.remove('d-none');
+  });
+
+  backFromSanghathanPage.addEventListener('click', () => {
+    sanghathanPage.classList.add('d-none');
     landingPage.classList.remove('d-none');
   });
 
   sangathanButton.addEventListener('click', () => {
     landingPage.classList.add('d-none');
-    partyContactsPage.classList.remove('d-none');
+    sanghathanPage.classList.remove('d-none');
+
+    const orgContactsList = document.getElementById("sanghathanContactsList");
+    orgContactsList.innerHTML = sortedOrgPageContacts.map(group => `
+        <div class="card shadow-lg mb-4">
+            <div class="card-header text-center bg-primary text-white">
+                <h4 class="mb-0">${group.title}</h4>
+            </div>
+            <div class="card-body">
+                ${group.contacts.map(contact => `
+                    <div class="mb-3">
+                        <h5 class="mb-1">${contact.name}, <small class="text-muted">${contact.designation}</small></h5>
+                        <p class="mb-0">
+                            <i class="fa-solid fa-phone fa-lg text-dark"></i>
+                            <a href="tel:${contact.mobile}" class="text-dark text-decoration-none ms-1">${contact.mobile}</a>
+                            <a href="https://wa.me/${contact.mobile}" class="ms-3 text-success" target="_blank">
+                                <i class="fa-brands fa-whatsapp fa-lg"></i>
+                            </a>
+                        </p>
+                    </div>
+                    <hr>
+                `).join("")}
+            </div>
+        </div>
+    `).join("");
+
   });
 
-  backToLandingParty.addEventListener('click', () => {
-    partyContactsPage.classList.add('d-none');
-    landingPage.classList.remove('d-none');
-  });
+  //backToLandingParty.addEventListener('click', () => {
+    //partyContactsPage.classList.add('d-none');
+    //landingPage.classList.remove('d-none');
+  //});
 
-  mandalBtn.addEventListener('click', () => {
+  /*mandalBtn.addEventListener('click', () => {
     //document.getElementById('mandalSection').classList.remove('d-none');
     boothContactsSection.classList.add('d-none');
     mandalContactsSection.classList.add('d-none');
     boothSection.classList.add('d-none');
     mandalSection.classList.remove('d-none');
     
-  });
+  });*/
 
-  boothBtn.addEventListener('click', () => {
+  /*boothBtn.addEventListener('click', () => {
     //document.getElementById('boothSection').classList.remove('d-none');
     boothContactsSection.classList.add('d-none');
     mandalContactsSection.classList.add('d-none');
     boothSection.classList.remove('d-none');
     mandalSection.classList.add('d-none');
-  });
+  });*/
 
-  mandalSpinner.addEventListener('change', () => {
+  /*mandalSpinner.addEventListener('change', () => {
     const selectedValue = mandalSpinner.value;
     const contacts = mandalContacts[selectedValue] || [];
     mandalTypeTitle.textContent = selectedValue.replace(/([A-Z])/g, ' $1').trim();
@@ -518,10 +677,10 @@
         </div>
       </div>
     `).join('');
-  });
+  });*/
 
 
-  boothSpinner.addEventListener('change', () => {
+  /*boothSpinner.addEventListener('change', () => {
     const selectedValue = boothSpinner.value;
     const contacts = boothContacts[selectedValue] || [];
     boothTypeTitle.textContent = selectedValue.replace(/([A-Z])/g, ' $1').trim();
@@ -535,7 +694,7 @@
         </div>
       </div>
     `).join('');
-  });
+  });*/
 
 </script>
 </body>
