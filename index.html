@@ -7,6 +7,10 @@
   <title>CP Contacts</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome (for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <style>
     body {
       background-color: #f8f9fa;
@@ -18,6 +22,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      background-color: aliceblue;
     }
     .btn-custom {
       width: 80%;
@@ -55,7 +60,7 @@
 <div id="prashasanPage" class="container d-none">
     <h2 class="text-center mt-4">Prashasan</h2>
     <button id="backToLandingPrashasan" class="btn btn-outline-primary mb-3">Back</button>
-    <div id="prashasanContactsList" class="mt-4">
+    <div id="prashasanContactsList" class="container mt-4">
       <!-- Government contact cards will be dynamically added here -->
     </div>
   </div>
@@ -159,13 +164,41 @@
   ];
 
   const prashasanPageContacts = [
-    { name: 'Kamal Das', designation: 'Pradhan - Phoolthali', mobile: '9366050546' },
-    { name: 'Bimal Saha', designation: 'Upa Pradhan - Phoolthali', mobile: '9366050546' },
-    { name: 'Romen Sen', designation: 'Member - Phoolthali', mobile: '9366050546', type: 'panchayat', details: [
-      { name: 'Nirmal Sarkar', designation: 'Ward Member', ward: 1, mobile: '9366050546' },
-      { name: 'Seema Shil', designation: 'Ward Member', ward: 2, mobile: '9366050546' }
-    ]}
+    {title:'Murticherra GP', contacts:[{name:'Salamoni Urang',designation:'Pradhan',mobile:'9233506660'},
+    {name:'Chandra Sekhar Kurmi',designation:'Upa-Pradhan',mobile:'8415863887'}]},
+    {title:'Manuvelly GP', contacts:[{name:'Nitesh Digar',designation:'Pradhan',mobile:'8729943895'},
+    {name:'Krishna Paul',designation:'Upa Pradhan',mobile:'7085687857'}]},
+    {title:'Samrurpar GP', contacts:[{name:'Prabha Sukla Baidya',designation:'Pradhan',mobile:'8132942695'},
+    {name:'Subhrangshu Dey',designation:'Upa Pradhan',mobile:'8974178322'}]},
+    {title:'Chandipur GP', contacts:[{name:'Jutsna Rani Das',designation:'Pradhan',mobile:'7629899231'},
+    {name:'Biplab Das',designation:'Upa Pradhan',mobile:'8798919494'}]},
+    {title:'Srirampur GP', contacts:[{name:'Amari Sarkar',designation:'Pradhan',mobile:'6909230780'},
+    {name:'Prasanta Das',designation:'Upa Pradhan',mobile:'8909289875'}]},
+    {title:'Halairpar GP', contacts:[{name:'Ratan Das',designation:'Pradhan',mobile:'8798523709'},
+    {name:'Basanti Das',designation:'Upa Pradhan',mobile:'7005773141'}]},
+    {title:'Rangrung GP', contacts:[{name:'Kishan Urang',designation:'Pradhan',mobile:'8837365291'},
+    {name:'Amita Malakar',designation:'Upa Pradhan',mobile:'9436906986'}]},
+    {title:'Jarultali GP', contacts:[{name:'Pratima Paul',designation:'Pradhan',mobile:'9366190687'},
+    {name:'Rajkumar Sinha',designation:'Upa Pradhan',mobile:'9366269537'}]},
+    {title:'Chantail GP', contacts:[{name:'Supriya Dey',designation:'Pradhan',mobile:'9862806646'},
+    {name:'Ajit Ghosh',designation:'Upa Pradhan',mobile:'7629910712'}]},
+    {title:'Fultail GP', contacts:[{name:'Mridul Sinha',designation:'Pradhan',mobile:'9863935360'},
+    {name:'Joyjit Malakar',designation:'Upa Pradhan',mobile:'9863538812'}]},
+    {title:'Sarojini GP', contacts:[{name:'Anita kairi',designation:'Pradhan',mobile:'7085461029'},
+    {name:'Sajal Bauri',designation:'Upa Pradhan',mobile:'6909051872'}]},
+    {title:'Dhanbilash GP', contacts:[{name:'Bhadra Mohan Singha',designation:'Pradhan',mobile:'9089801360'},
+    {name:'Abinash Suklabaidya',designation:'Upa Pradhan',mobile:'9436514389'}]},
+    {title:'BC Nagar GP', contacts:[{name:'Beby Rudrapal',designation:'Pradhan',mobile:'9862601912'},
+    {name:'Sanjoy Debroy',designation:'Upa Pradhan',mobile:'8794996282'}]},
+    {title:'Gournagar GP', contacts:[{name:'Gobinda Debnath',designation:'Pradhan',mobile:'8974905757'},
+    {name:'Bimalendu Dey',designation:'Upa Pradhan',mobile:'8794424641'}]},
+    {title:'Kaulikura GP', contacts:[{name:'Nepal Das',designation:'Pradhan',mobile:'7628885460'},
+    {name:'Sukanta Debnath',designation:'Upa Pradhan',mobile:'9612071235'}]},
+    {title:'Jalai GP', contacts:[{name:'Paritosh Dey',designation:'Pradhan',mobile:'9862048861'},
+    {name:'Binanda M.Das',designation:'Upa Pradhan',mobile:'8974210185'}]}
   ];
+
+  var sortedPrashasanPageContacts = prashasanPageContacts.sort((a, b) => a.title.localeCompare(b.title));
 
   const mandalContacts = {
     mandalCommittee: [
@@ -211,19 +244,46 @@
     govContactsPage.classList.add('d-none');
     prashasanPage.classList.remove('d-none');
 
-    const govContactsList = document.getElementById('prashasanContactsList');
-    govContactsList.innerHTML = prashasanPageContacts.map(contact => `
+    //const govContactsList = document.getElementById('prashasanContactsList');
+    const govContactsList = document.getElementById("prashasanContactsList");
+    govContactsList.innerHTML = sortedPrashasanPageContacts.map(group => `
+        <div class="card shadow-lg mb-4">
+            <div class="card-header text-center bg-primary text-white">
+                <h4 class="mb-0">${group.title}</h4>
+            </div>
+            <div class="card-body">
+                ${group.contacts.map(contact => `
+                    <div class="mb-3">
+                        <h5 class="mb-1">${contact.name}, <small class="text-muted">${contact.designation}</small></h5>
+                        <p class="mb-0">
+                            <i class="fa-solid fa-phone fa-lg text-dark"></i>
+                            <a href="tel:${contact.mobile}" class="text-dark text-decoration-none ms-1">${contact.mobile}</a>
+                            <a href="https://wa.me/${contact.mobile}" class="ms-3 text-success" target="_blank">
+                                <i class="fa-brands fa-whatsapp fa-lg"></i>
+                            </a>
+                        </p>
+                    </div>
+                    <hr>
+                `).join("")}
+            </div>
+        </div>
+    `).join("");
+  });
+    
+    /*prashasanPageContacts.map((contact, index) => `
       <div class="card mb-3 contact-card">
         <div class="card-body">
           <h5 class="card-title">${contact.name}</h5>
           <p class="card-text">${contact.designation}</p>
-          ${contact.type === 'panchayat' ? `<button class="btn btn-primary details-btn" data-details='${JSON.stringify(contact.details)}'>Details</button>` 
-          : `<a href="tel:${contact.mobile}" class="btn btn-primary">Call: ${contact.mobile}</a>`}
+          <p class="card-text">Mobile: ${contact.mobile}</p>
+          ${contact.type === 'panchayat' 
+            ? `<button class="btn btn-primary details-btn" data-details='${JSON.stringify(contact.details)}'>Details</button>` 
+            : `<a href="tel:${contact.mobile}" class="btn btn-primary">Call</a>`}
         </div>
       </div>
-    `).join('');
+    `).slice(0, 2).join('');
     attachDetailsEventListeners();
-  });
+  });*/
 
   function attachDetailsEventListeners() {
     document.querySelectorAll('.details-btn').forEach(button => {
